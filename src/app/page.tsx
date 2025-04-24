@@ -1,3 +1,4 @@
-export default function Home() {
-  return <div className="w-f h-40">Go to nextjs.org →</div>;
-}
+const Home = () => {
+  return <div className="w-f h-[80vh]">MainPage</div>;
+};
+export default Home;
