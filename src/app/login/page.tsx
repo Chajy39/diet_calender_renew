@@ -1,4 +1,13 @@
-const Home = () => {
-  return <div className="w-f h-[80vh]">Login Page</div>;
+type LoginFormType = {
+  id: string;
+  password: string;
 };
-export default Home;
+
+const LoginPage = () => {
+  return (
+    <div className="w-f h-[80vh]">
+      <h1>Login</h1>
+    </div>
+  );
+};
+export default LoginPage;
