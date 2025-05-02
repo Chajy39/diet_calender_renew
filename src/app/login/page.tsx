@@ -41,11 +41,10 @@ const LoginPage = () => {
       <h1>Login</h1>
       <InputForm>
         <FormInput
-          id="id"
           {...register("id", {
-            required: "-빼고 입력해주세요",
+            required: "' - ' 를 제외하고 입력해주세요",
           })}
-          placeholder="-빼고 입력해주세요"
+          placeholder="' - ' 를 제외하고 입력해주세요"
         />
         <FormInput
           id="password"

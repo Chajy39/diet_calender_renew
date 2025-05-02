@@ -4,7 +4,7 @@ import tw from "tailwind-styled-components";
 import Link from "next/link";
 import Image, { ImageProps } from "next/image";
 
-const FooterWrap = tw.footer`fixed w-full b-0 l-0`;
+const FooterWrap = tw.footer`fixed w-full b-0 l-0 z-1`;
 const BottomTabWrap = tw.nav`flex justify-between items-center gap-6`;
 const TabItemWrap = tw.div`flex-1`;
 const TabItem = tw.div`flex flex-col items-center gap-1 text-[0.75rem] text-[#555555] text-semibold py-2`;

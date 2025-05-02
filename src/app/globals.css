@@ -27,5 +27,5 @@ body {
 
 input:focus {
   outline: none;
-  border-bottom: 1px solid #44bb44;
+  border-color: #44bb44;
 }
