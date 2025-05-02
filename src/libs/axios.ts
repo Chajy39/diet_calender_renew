@@ -7,16 +7,15 @@ import axios, {
 export const OK = "OK";
 
 export type Response = {
-  ok: boolean;
-  status: number;
+  code: string;
   msg: string;
-  data: any;
+  data: unknown;
 };
 export default class Axios {
   // Here you can use your server URL
 
   private static readonly baseURL: string =
-    process.env.REACT_APP_API_URL || "http://localhost:3000";
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
   private static async buildHeader(obj = {}) {
     // let token = await AsyncLocalStorage.getItem("userToken");
@@ -24,7 +23,7 @@ export default class Axios {
     // let token = getRecoil(authState).token;
     const refreshToken = localStorage.getItem("refresh_token");
 
-    const header: any = {
+    const header = {
       Accept: "application/json",
       "Content-Type": "application/json",
       // Authorization: token,
@@ -47,6 +46,7 @@ export default class Axios {
     const cancelTokenSource = axios.CancelToken.source();
     const headers = await this.buildHeader(header);
     // axios client config
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config: any = {
       baseURL: this.baseURL,
       cancelToken: cancelTokenSource.token,
@@ -87,14 +87,14 @@ export default class Axios {
    */
   public static async get<T>(
     url: string,
-    params?: any
+    params?: unknown
   ): Promise<AxiosResponse> {
     try {
       const result = await (await this.client()).get<T>(url, params);
 
       return result;
     } catch (err) {
-      const oErr: any = err;
+      const oErr = err;
       const { response } = oErr;
 
       console.log("response", response);
@@ -118,16 +118,19 @@ export default class Axios {
    * @param payload
    * @returns
    */
-  public static async post<T>(url: string, data?: any): Promise<AxiosResponse> {
-    const fResponse: any = {
-      onDownloadProgress: (progressEvent: any): void => {},
+  public static async post<T>(
+    url: string,
+    data?: unknown
+  ): Promise<AxiosResponse> {
+    const fResponse = {
+      onDownloadProgress: (): void => {},
     };
 
     try {
       const result = await (await this.client()).post<T>(url, data, fResponse);
       return result;
     } catch (err) {
-      const oErr: any = err;
+      const oErr = err;
       const { response } = oErr;
 
       console.log("response", response);
@@ -182,13 +185,13 @@ export default class Axios {
 
   public static async patch<T>(
     url: string,
-    data?: any
+    data?: unknown
   ): Promise<AxiosResponse> {
     try {
       const result = await (await this.client()).patch<T>(url, data);
       return result;
     } catch (err) {
-      const oErr: any = err;
+      const oErr = err;
       const { response } = oErr;
       if (response) {
         return response;
@@ -197,12 +200,15 @@ export default class Axios {
     }
   }
 
-  public static async put<T>(url: string, data?: any): Promise<AxiosResponse> {
+  public static async put<T>(
+    url: string,
+    data?: unknown
+  ): Promise<AxiosResponse> {
     try {
       const result = await (await this.client()).put<T>(url, data);
       return result;
     } catch (err) {
-      const oErr: any = err;
+      const oErr = err;
       const { response } = oErr;
       if (response) {
         return response;
@@ -216,7 +222,7 @@ export default class Axios {
       const result = await (await this.client()).delete<T>(url);
       return result;
     } catch (err) {
-      const oErr: any = err;
+      const oErr = err;
       const { response } = oErr;
       if (response) {
         return response;

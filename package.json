@@ -16,6 +16,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.1",
+    "recoil": "^0.7.7",
+    "recoil-nexus": "^0.5.1",
     "tailwind-styled-components": "^2.2.0"
   },
   "devDependencies": {
