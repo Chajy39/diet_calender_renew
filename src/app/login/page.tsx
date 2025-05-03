@@ -1,15 +1,11 @@
 "use client";
 
 import loginController from "@/libs/loginController";
+import { LoginFormType } from "@/types/FormType";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-
-type LoginFormType = {
-  id: string;
-  password: string;
-};
 
 const FormWrap = tw.form`w-full h-[90vh] p-[10%] flex flex-col items-center justify-between`;
 const InputForm = tw.div`w-full flex flex-col gap-6`;
