@@ -1,3 +1,4 @@
+import { JoinFormType } from "@/types/FormType";
 import Axios, { Response } from "./axios";
 
 const loginController = {
@@ -31,6 +32,25 @@ const loginController = {
       return {
         code: "1001",
         msg: "checkId error " + err.toString(),
+        data: err.data!,
+      };
+    }
+  },
+  join: async (data: JoinFormType): Promise<Response> => {
+    try {
+      const sUrl = process.env.NEXT_PUBLIC_API_URL + "/join/";
+
+      console.log("url", sUrl);
+
+      const response = await Axios.post(sUrl, data);
+
+      return response.data;
+    } catch (err) {
+      console.error("join error: ", err);
+
+      return {
+        code: "1001",
+        msg: "join error " + err.toString(),
         data: err.data!,
       };
     }

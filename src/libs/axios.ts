@@ -21,13 +21,13 @@ export default class Axios {
     // let token = await AsyncLocalStorage.getItem("userToken");
     // let refreshToken = await AsyncLocalStorage.getItem("userRefreshToken");
     // let token = getRecoil(authState).token;
-    const refreshToken = localStorage.getItem("refresh_token");
+    // const refreshToken = localStorage.getItem("refresh_token");
 
     const header = {
       Accept: "application/json",
       "Content-Type": "application/json",
       // Authorization: token,
-      "refresh-token": refreshToken,
+      // "refresh-token": refreshToken,
     };
 
     Object.assign(header, obj);
@@ -133,7 +133,7 @@ export default class Axios {
       const oErr = err;
       const { response } = oErr;
 
-      console.log("response", response);
+      console.log("response", err);
       if (response && response.data) {
         //let oResponse = response.data;
         if (response && response.status === 401) {

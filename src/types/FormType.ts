@@ -1,4 +1,10 @@
-import { UseFormRegister, UseFormTrigger, UseFormWatch } from "react-hook-form";
+import {
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormTrigger,
+  UseFormWatch,
+} from "react-hook-form";
 
 export type LoginFormType = {
   id: string;
@@ -11,6 +17,8 @@ export interface JoinProps {
   register: UseFormRegister<JoinFormType>;
   trigger?: UseFormTrigger<JoinFormType>;
   watch?: UseFormWatch<JoinFormType>;
+  getValues?: UseFormGetValues<JoinFormType>;
+  handleSubmit?: UseFormHandleSubmit<JoinFormType>;
   isRegister?: boolean;
   formValid?: boolean[];
   checkId?: () => Promise<boolean>;
