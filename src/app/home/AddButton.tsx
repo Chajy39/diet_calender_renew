@@ -5,7 +5,7 @@ import { useState } from "react";
 import tw from "tailwind-styled-components";
 
 const ButtonWrap = tw.div`flex flex-col absolute bottom-4 right-8 items-end`;
-const OpenButton = tw.button`transition-all duration-300 ease-in-out rounded-full bg-[#44bb44]`;
+const OpenButton = tw.button`transition-all duration-250 ease-in-out rounded-full bg-[#44bb44]`;
 const ListWrap = tw.div`w-32 flex flex-col p-1 rounded-md shadow-md border border-[#efefef]`;
 const ListItem = tw.button`flex items-center py-2 px-3 text-[0.75rem] gap-1`;
 
