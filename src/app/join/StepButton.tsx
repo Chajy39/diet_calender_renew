@@ -2,8 +2,9 @@ import { JoinProps } from "@/types/FormType";
 import Image, { ImageProps } from "next/image";
 import tw from "tailwind-styled-components";
 
-const ButtonWrap = tw.button`absolute bottom-4 right-8 p-2 rounded-lg bg-[#cecece]`;
+const NextButtonWrap = tw.button`absolute bottom-4 right-8 p-2 rounded-lg bg-[#44bb44]`;
 const BtnImg = tw(Image)<ImageProps>``;
+const CompleteButtonWrap = tw.button`absolute bottom-4 left-8 right-8 width-auto py-2 rounded-lg bg-[#44bb44] text-white`;
 
 const StepButton = ({
   step,
@@ -24,6 +25,12 @@ const StepButton = ({
       isValid = await trigger("password");
     } else if (step < 6) {
       isValid = await trigger("confirmPassword");
+    } else if (step < 8) {
+      isValid = await trigger("sex");
+    } else if (step < 10) {
+      isValid = await trigger("age");
+    } else if (step < 12) {
+      isValid = (await trigger("height")) && (await trigger("weight"));
     }
 
     if (isValid) {
@@ -33,15 +40,17 @@ const StepButton = ({
     console.log("isValid", isValid);
   };
 
-  return (
-    <ButtonWrap onClick={CheckStep}>
+  return step === 11 ? (
+    <CompleteButtonWrap type="submit">완료</CompleteButtonWrap>
+  ) : (
+    <NextButtonWrap onClick={CheckStep}>
       <BtnImg
         src="/svg/ic_arrow_right.svg"
         alt="NextStep"
         width={24}
         height={24}
       />
-    </ButtonWrap>
+    </NextButtonWrap>
   );
 };
 

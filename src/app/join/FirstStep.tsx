@@ -21,11 +21,15 @@ const FirstStep = ({
     {
       title: "휴대폰 번호를 입력해주세요",
       component: (
-        <div key="step1">
+        <div key="input1">
           <FormInput
             id="id"
             {...register("id", {
               required: "' - ' 를 제외하고 입력해주세요",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "숫자만 입력해주세요.",
+              },
               minLength: 10,
               maxLength: 11,
             })}
@@ -45,7 +49,7 @@ const FirstStep = ({
     {
       title: "비밀번호를 입력해주세요",
       component: (
-        <div key="step2">
+        <div key="input2">
           <FormInput
             id="password"
             type="password"
@@ -66,7 +70,7 @@ const FirstStep = ({
     {
       title: "비밀번호를 다시 입력해주세요",
       component: (
-        <div key="step3">
+        <div key="input3">
           <FormInput
             id="confirmPassword"
             type="password"
@@ -89,7 +93,7 @@ const FirstStep = ({
   return stepComponents.slice(0, Math.floor(step / 2) + 1).map((item, idx) => {
     const isLast = idx === Math.floor(step / 2);
     return isLast ? (
-      <InputWrap key={`step${idx}`}>
+      <InputWrap key={`step1${idx}`}>
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -110,7 +114,7 @@ const FirstStep = ({
         )}
       </InputWrap>
     ) : (
-      <InputWrap key={`step${idx}`}>
+      <InputWrap key={`step1${idx}`}>
         <Subtitle>{item.title}</Subtitle>
         {item.component}
       </InputWrap>

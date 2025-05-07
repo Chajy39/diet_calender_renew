@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import loginController from "@/libs/loginController";
+import { JoinFormType } from "@/types/FormType";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import FirstStep from "./FirstStep";
-import { JoinFormType } from "@/types/FormType";
-import { useForm } from "react-hook-form";
-import StepButton from "./StepButton";
 import SecondStep from "./SecondStep";
-import loginController from "@/libs/loginController";
+import StepButton from "./StepButton";
+import { useRouter } from "next/navigation";
 
-const JoinWrap = tw.div`relative w-full h-[80vh] flex flex-col py-[10%] px-[6%] gap-8`;
+const JoinWrap = tw.form`relative w-full h-[80vh] flex flex-col py-[15%] px-[6%] gap-8`;
 
 const JoinPage = () => {
+  const router = useRouter();
   const { register, trigger, handleSubmit, watch, getValues } =
     useForm<JoinFormType>();
   const [step, setStep] = useState<number>(0);
@@ -41,6 +43,22 @@ const JoinPage = () => {
     }
   };
 
+  const join = async (data: JoinFormType) => {
+    try {
+      const response = await loginController.join(data);
+
+      if (response && response.data) {
+        console.log(response.msg);
+        if (response.code === "0000") {
+          router.replace("/login");
+        }
+      }
+    } catch (e) {
+      console.error("join err =>", e);
+      setIsRegister(true);
+    }
+  };
+
   const checkValid = async () => {
     const validTemp = [...formValid];
     if (step === 1) {
@@ -57,12 +75,8 @@ const JoinPage = () => {
     console.log("checkValid", validTemp);
   };
 
-  useEffect(() => {
-    console.log("step", step);
-  }, [step]);
-
   return (
-    <JoinWrap>
+    <JoinWrap onSubmit={handleSubmit(join)}>
       {step < 6 ? (
         <FirstStep
           step={step}
@@ -79,6 +93,8 @@ const JoinPage = () => {
           setStep={setStep}
           register={register}
           trigger={trigger}
+          watch={watch}
+          getValues={getValues}
           formValid={formValid}
         />
       )}
@@ -87,6 +103,7 @@ const JoinPage = () => {
         setStep={setStep}
         register={register}
         trigger={trigger}
+        handleSubmit={handleSubmit}
         checkId={checkId}
         checkValid={checkValid}
       />

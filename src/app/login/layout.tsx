@@ -5,11 +5,5 @@ export default function LoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <RecoilProvider>{children}</RecoilProvider>
-      </body>
-    </html>
-  );
+  return <RecoilProvider>{children}</RecoilProvider>;
 }
