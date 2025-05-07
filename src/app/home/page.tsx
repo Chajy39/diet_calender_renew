@@ -3,8 +3,7 @@ import CalendarHeader from "./CalendarHeader";
 
 const Home = () => {
   return (
-    <div className="w-f h-[80vh] relative">
-      Home Page
+    <div className="w-full h-full relative">
       <CalendarHeader />
       <AddButton />
     </div>

@@ -1,4 +1,4 @@
 const Home = () => {
-  return <div className="w-f h-[80vh]">MainPage</div>;
+  return <div className="w-full">MainPage</div>;
 };
 export default Home;

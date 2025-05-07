@@ -2,7 +2,7 @@ import { JoinProps } from "@/types/FormType";
 import Image, { ImageProps } from "next/image";
 import tw from "tailwind-styled-components";
 
-const NextButtonWrap = tw.button`absolute bottom-4 right-8 p-2 rounded-lg bg-[#44bb44]`;
+const NextButtonWrap = tw.button`absolute bottom-4 right-4 p-2 rounded-lg bg-[#44bb44]`;
 const BtnImg = tw(Image)<ImageProps>``;
 const CompleteButtonWrap = tw.button`absolute bottom-4 left-8 right-8 width-auto py-2 rounded-lg bg-[#44bb44] text-white`;
 

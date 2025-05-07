@@ -5,6 +5,9 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import weekday from "dayjs/plugin/weekday";
 import { useRef, useState } from "react";
+import "dayjs/locale/ko";
+
+dayjs.locale("ko");
 
 dayjs.extend(weekday);
 dayjs.extend(isSameOrAfter);
@@ -58,52 +61,41 @@ const CalendarHeader = () => {
   const days = generateDays();
 
   return (
-    <div
-      style={{ padding: "16px", maxWidth: "100%", fontFamily: "sans-serif" }}
-    >
-      <div
-        style={{ display: "flex", alignItems: "center", marginBottom: "12px" }}
-      >
-        <button onClick={handlePrevMonth}>←</button>
-        <div style={{ flex: 1, textAlign: "center" }}>
+    <div className="pt-6 pb-4">
+      <div className="flex items-center mx-4 mb-3">
+        <button className="px-2" onClick={handlePrevMonth}>
+          ←
+        </button>
+        <h3 className="flex-1 text-center font-semibold">
           {currentMonth.format("YYYY년 MM월")}
-        </div>
-        <button onClick={handleNextMonth}>→</button>
+        </h3>
+        <button className="px-2" onClick={handleNextMonth}>
+          →
+        </button>
       </div>
 
-      <div
-        ref={scrollRef}
-        // onScroll={handleScroll}
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          borderBottom: "1px solid #ccc",
-          paddingBottom: "8px",
-        }}
-      >
+      <div ref={scrollRef} className="flex overflow-x-auto pb-2">
         {days.map((day) => (
-          <div
+          <button
+            className={`min-w-14 text-center mx-0.5 p-1 rounded-md ${
+              selectedDate?.isSame(day, "day")
+                ? "bg-[#44bb44] text-white"
+                : "bg-transparent text-[#555555]"
+            }`}
             key={day.format("YYYY-MM-DD")}
             onClick={() => handleDateSelect(day)}
-            style={{
-              minWidth: "80px",
-              textAlign: "center",
-              marginRight: "8px",
-              padding: "8px",
-              cursor: "pointer",
-              backgroundColor: selectedDate?.isSame(day, "day")
-                ? "#0070f3"
-                : "transparent",
-              color: selectedDate?.isSame(day, "day") ? "#fff" : "#000",
-              borderRadius: "8px",
-              flexShrink: 0,
-            }}
           >
-            <div>{day.date()}일</div>
-            <div style={{ fontSize: "12px", color: "#666" }}>
+            <h5 className="font-semibold">{day.date()}</h5>
+            <p
+              className={`text-[0.75rem] ${
+                selectedDate?.isSame(day, "day")
+                  ? "text-white"
+                  : "text-[#999999]"
+              }`}
+            >
               {day.format("dd")}
-            </div>
-          </div>
+            </p>
+          </button>
         ))}
       </div>
     </div>

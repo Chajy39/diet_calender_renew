@@ -10,7 +10,7 @@ import SecondStep from "./SecondStep";
 import StepButton from "./StepButton";
 import { useRouter } from "next/navigation";
 
-const JoinWrap = tw.form`relative w-full h-[80vh] flex flex-col py-[15%] px-[6%] gap-8`;
+const JoinWrap = tw.form`relative w-full h-full flex flex-col py-[15%] px-[6%] gap-8`;
 
 const JoinPage = () => {
   const router = useRouter();

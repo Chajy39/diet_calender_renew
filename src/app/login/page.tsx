@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 
-const FormWrap = tw.form`w-full h-[90vh] p-[10%] flex flex-col items-center justify-between`;
+const FormWrap = tw.form`w-full h-full p-[10%] flex flex-col items-center justify-between`;
 const InputForm = tw.div`w-full flex flex-col gap-6`;
 const FormInput = tw.input`w-full border-b border-[#bbbbbb] p-2 text-[0.75rem]`;
 const SubmitButton = tw.button`w-full py-3 bg-[#44bb44] text-white font-semibold rounded-md`;

@@ -7,7 +7,7 @@ import tw from "tailwind-styled-components";
 const FooterWrap = tw.footer`w-full z-1`;
 const BottomTabWrap = tw.nav`flex justify-between items-center gap-6 border-t border-[#dedede]`;
 const TabItemWrap = tw.div`flex-1`;
-const TabItem = tw.div`flex flex-col items-center gap-1 text-[0.75rem] text-[#555555] text-semibold py-2 transition-all duration-100 ease-in-out`;
+const TabItem = tw.div`flex flex-col items-center gap-1 text-[0.6rem] text-[#555555] text-semibold pt-1 pb-2 transition-all duration-100 ease-in-out`;
 
 const BottomTabs = () => {
   const pathname = usePathname();
