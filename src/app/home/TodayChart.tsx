@@ -27,7 +27,7 @@ const TodayChart = ({ data }: TodayChartProps) => {
         <div className="flex-1 flex flex-col">
           <p>칼로리</p>
           <p>{data.calorie} / 1500</p>
-          <div className="w-full h-10 rounded-md bg-[#cecece]"></div>
+          <div className="w-full flex-1 rounded-md bg-[#eeeeee]"></div>
         </div>
       </div>
       <div className="flex justify-between gap-2 m-6">

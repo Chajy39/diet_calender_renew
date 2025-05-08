@@ -45,6 +45,7 @@ const ProgressCircle = ({
         r={radius}
         cx={size / 2}
         cy={size / 2}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
         style={{ transition: "stroke-dashoffset 0.3s" }}
       />
       <text
