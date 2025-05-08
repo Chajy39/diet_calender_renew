@@ -1,11 +1,25 @@
 "use client";
 
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import weekday from "dayjs/plugin/weekday";
-import { useRef, useState } from "react";
-import "dayjs/locale/ko";
+import Image, { ImageProps } from "next/image";
+import {
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import tw from "tailwind-styled-components";
+
+interface CalendarHeaderProps {
+  selectedDate: dayjs.Dayjs;
+  setSelectedDate: React.Dispatch<SetStateAction<dayjs.Dayjs>>;
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
+}
 
 dayjs.locale("ko");
 
@@ -13,9 +27,22 @@ dayjs.extend(weekday);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-const CalendarHeader = () => {
+const HeaderWrap = tw.header`pt-6 pb-4`;
+const DateWrap = tw.div`flex items-center mx-4 mb-3`;
+const DateButton = tw.button`px-2`;
+const ButtonImg = tw(Image)<ImageProps>``;
+const DayListWrap = tw.div`flex overflow-x-auto pb-2`;
+const DayButton = tw.button`min-w-15 text-center mx-0.5 p-1 rounded-md font-semibold`;
+const DateTitle = tw.p`flex-1 text-center font-semibold`;
+const WeekText = tw.p`text-[0.75rem]`;
+
+const CalendarHeader = ({
+  selectedDate,
+  setSelectedDate,
+  setIsLoading,
+}: CalendarHeaderProps) => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
-  const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | null>(null);
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const generateDays = () => {
@@ -38,21 +65,6 @@ const CalendarHeader = () => {
     setCurrentMonth((prev) => prev.add(1, "month"));
   };
 
-  //   const handleScroll = () => {
-  //     const scrollLeft = scrollRef.current?.scrollLeft || 0;
-  //     const scrollWidth = scrollRef.current?.scrollWidth || 0;
-  //     const clientWidth = scrollRef.current?.clientWidth || 0;
-
-  //     // Near left
-  //     if (scrollLeft === 0) {
-  //       setCurrentMonth((prev) => prev.subtract(1, "month"));
-  //     }
-  //     // Near right
-  //     if (scrollLeft + clientWidth >= scrollWidth) {
-  //       setCurrentMonth((prev) => prev.add(1, "month"));
-  //     }
-  //   };
-
   const handleDateSelect = (date: dayjs.Dayjs) => {
     setSelectedDate(date);
     console.log("선택된 날짜:", date.format("YYYY-MM-DD"));
@@ -60,24 +72,51 @@ const CalendarHeader = () => {
 
   const days = generateDays();
 
-  return (
-    <div className="pt-6 pb-4">
-      <div className="flex items-center mx-4 mb-3">
-        <button className="px-2" onClick={handlePrevMonth}>
-          ←
-        </button>
-        <h3 className="flex-1 text-center font-semibold">
-          {currentMonth.format("YYYY년 MM월")}
-        </h3>
-        <button className="px-2" onClick={handleNextMonth}>
-          →
-        </button>
-      </div>
+  useLayoutEffect(() => {
+    if (!scrollRef.current || !selectedDate) return;
 
-      <div ref={scrollRef} className="flex overflow-x-auto pb-2">
+    const selectedIndex = days.findIndex((day) =>
+      day.isSame(selectedDate, "day")
+    );
+
+    if (selectedIndex >= 0) {
+      const containerWidth = scrollRef.current.getBoundingClientRect().width;
+      const scrollX = selectedIndex * 64 - containerWidth / 2 + 64 / 2;
+
+      scrollRef.current.scrollLeft = scrollX;
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!scrollRef.current || !selectedDate) return;
+
+    const index = days.findIndex((d) => d.isSame(selectedDate, "day"));
+    const containerWidth = scrollRef.current.getBoundingClientRect().width;
+    const scrollX = index * 64 - containerWidth / 2 + 64 / 2;
+
+    scrollRef.current.scrollTo({
+      left: scrollX,
+      behavior: "smooth",
+    });
+  }, [selectedDate]);
+
+  return (
+    <HeaderWrap>
+      <DateWrap>
+        <DateButton className="px-2" onClick={handlePrevMonth}>
+          <ButtonImg src="/svg/ic_prev.svg" alt="next" width={20} height={20} />
+        </DateButton>
+        <DateTitle>{currentMonth.format("YYYY년 MM월")}</DateTitle>
+        <DateButton className="px-2" onClick={handleNextMonth}>
+          <ButtonImg src="/svg/ic_next.svg" alt="next" width={20} height={20} />
+        </DateButton>
+      </DateWrap>
+
+      <DayListWrap ref={scrollRef}>
         {days.map((day) => (
-          <button
-            className={`min-w-14 text-center mx-0.5 p-1 rounded-md ${
+          <DayButton
+            className={`${
               selectedDate?.isSame(day, "day")
                 ? "bg-[#44bb44] text-white"
                 : "bg-transparent text-[#555555]"
@@ -85,20 +124,20 @@ const CalendarHeader = () => {
             key={day.format("YYYY-MM-DD")}
             onClick={() => handleDateSelect(day)}
           >
-            <h5 className="font-semibold">{day.date()}</h5>
-            <p
-              className={`text-[0.75rem] ${
+            {day.date()}
+            <WeekText
+              className={`${
                 selectedDate?.isSame(day, "day")
                   ? "text-white"
                   : "text-[#999999]"
               }`}
             >
               {day.format("dd")}
-            </p>
-          </button>
+            </WeekText>
+          </DayButton>
         ))}
-      </div>
-    </div>
+      </DayListWrap>
+    </HeaderWrap>
   );
 };
 export default CalendarHeader;
